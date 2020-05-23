@@ -1,8 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import io from 'socket.io-client';
 
 function App() {
+  const connection = io('http://localhost:3000',{
+    query: 'quack-client',
+    // path: "/"
+  });
+  connection.on('tweet',(data:any) =>{
+    console.log(data);
+  });
   return (
     <div className="App">
       <header className="App-header">
