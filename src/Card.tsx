@@ -7,10 +7,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment'
 import { Timeline } from './model/timeline';
+import './Card.css';
 
 const styles = () =>({
     root: {
         maxWidth: 500,
+        width: 300,
     },
     media: {
         height: 200,
@@ -41,7 +43,7 @@ class MediaCard extends React.Component<Props,State> {
     
     render(){
         const {classes, timeline}  = this.props;
-        const {media_url, usr , text} = timeline;
+        const {media_url, usr , text, id} = timeline;
         const {displayedDate} = this.state;
         const image = media_url.length > 0 ? 
         <CardMedia
@@ -51,19 +53,26 @@ class MediaCard extends React.Component<Props,State> {
       
         const usrname = usr.name.length > 10 ? usr.name.slice(10): usr.name;
         return (
-        <Card className={classes.root}>
-          <CardActionArea>
-            {image}
-            <CardContent>
-              <Typography variant="body1" component="p">
-                {text}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {displayedDate} / {usrname}(@{usr.id})
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        <div className="base">
+            <div className="hidden">
+                    <Card className={classes.root}>
+                        <CardActionArea>
+                            {image}
+                            <CardContent>
+                            <Typography variant="body1" component="p">
+                                {text}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                {usrname}(@{usr.id}) {id}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                {displayedDate}
+                            </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+            </div>
+        </div>
       );
 
     }

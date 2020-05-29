@@ -27,9 +27,15 @@ export default class App extends React.Component<Props, State>  {
       const timelines = this.state.timelines;
       data.date = new Date(data.date);
       timelines.unshift(data) // 既存ログに追加
+      if(timelines.length > 30){
+        timelines.splice(30);
+      }
       this.setState({ timelines: timelines });
     });
-    this.state.connection.on('title', (title:string)=>this.setState({title:title}));
+    this.state.connection.on('title', (title:string)=>{
+      document.title = `Quack | ${title}`;
+      this.setState({title:title});
+    });
   }
 
   render() {
@@ -39,7 +45,7 @@ export default class App extends React.Component<Props, State>  {
     ));
     return (
       <div>
-        <h1>Quack: {title}</h1>
+        <h1>Quack | {title}</h1>
         <div>{_timelines}</div>
       </div>
     );
